@@ -46,8 +46,7 @@ demonstrator app itself has actually been built for each contester.
 - **GUI tests:** Strong first-class support — `flutter_test` for widget
   tests and the `integration_test` package for full end-to-end/driver-based
   UI tests, both officially maintained.
-- **Python:** None. Flutter apps are written in Dart; there is no practical
-  way to build the UI from Python.
+- **Python:** yes. using Flet package
 
 ## Tauri (Rust)
 
