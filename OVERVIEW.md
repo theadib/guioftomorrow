@@ -19,7 +19,7 @@ demonstrator app itself has actually been built for each contester.
 
 | Contester      | Language | Demonstrator |
 |----------------|----------|--------------|
-| Flutter        | Dart     | Pending      |
+| Flutter        | Dart     | [Done](flutter/) |
 | Tauri          | Rust     | Pending      |
 | Slint          | Rust     | Pending      |
 | Dioxus         | Rust     | Pending      |
