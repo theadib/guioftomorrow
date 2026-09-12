@@ -91,6 +91,12 @@ there is no separate installer step for this demonstrator.
 |---|---|---|---|
 | ![Wallclock tab](screenshots/wallclock.png) | ![Stopwatch tab](screenshots/stopwatch.png) | ![Synctime tab](screenshots/synctime.png) | ![Settings tab](screenshots/settings.png) |
 
+### Theme / contrast combinations
+
+| Light | Dark | Light, high contrast | Dark, high contrast |
+|---|---|---|---|
+| ![Wallclock, light theme](screenshots/wallclock_light.png) | ![Wallclock, dark theme](screenshots/wallclock_dark.png) | ![Wallclock, light theme, high contrast](screenshots/wallclock_light_highcontrast.png) | ![Wallclock, dark theme, high contrast](screenshots/wallclock_dark_highcontrast.png) |
+
 Captured from the Linux release build (`flutter build linux --release`).
 
 ## GUI testing
