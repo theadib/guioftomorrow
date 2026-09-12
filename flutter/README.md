@@ -71,13 +71,18 @@ there is no separate installer step for this demonstrator.
 
 - **Wallclock** — current date/time in a user-selectable IANA timezone,
   persisted across restarts (`shared_preferences`), rendered with the
-  `timezone`/`intl` packages.
+  `timezone`/`intl` packages; the `:` separators blink once a second as a
+  small clock-face animation (`AnimatedOpacity`).
 - **Stopwatch** — start/stop/reset/lap using `dart:core`'s `Stopwatch`,
   with recorded laps exportable as a plain-text report
   (`path_provider` + `dart:io`).
 - **Synctime** — a `CustomPainter` drawing two arcs (1 rotation/second and
   1 rotation/minute) around a live `hh:mm:ss` readout, redrawn ~30 times a
   second via a periodic `Timer`.
+
+## Screenshots
+
+TODO — screenshots of the three tabs still need to be added here.
 
 ## GUI testing
 

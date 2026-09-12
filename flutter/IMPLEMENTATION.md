@@ -8,6 +8,7 @@ Per the [repo's demonstrator spec](../README.md#demonstrator):
   - [x] Displays current date and time
   - [x] User can change timezone
   - [x] Selected timezone persists across app restarts
+  - [x] Small animation: the `:` separators blink on/off once a second
 - [x] **Stopwatch** tab
   - [x] Start / stop
   - [x] Reset
@@ -28,6 +29,9 @@ Per the [repo's demonstrator spec](../README.md#demonstrator):
       windows` has not actually been run.
 - [ ] Android build — not verified (no Android SDK in the dev container);
       same caveat as Windows.
+- [ ] Screenshots — not yet added to the repo. Verification so far was done
+      by capturing frames from a running Xvfb session (see below) rather
+      than committing polished screenshots; still TODO.
 
 ## Side notes
 
@@ -47,6 +51,11 @@ Per the [repo's demonstrator spec](../README.md#demonstrator):
   deltas** — it's monotonic and unaffected by system clock adjustments,
   which matters for a stopwatch specifically (as opposed to the wallclock/
   synctime tabs, which are deliberately showing wall-clock time).
+- **Wallclock's blinking colons** (`_buildAnimatedTime` in
+  `lib/screens/wallclock_tab.dart`) use `AnimatedOpacity` toggled by
+  `zoned.second.isEven`, reusing the existing once-a-second timer/rebuild
+  rather than adding a second ticker — kept intentionally small/subtle
+  rather than animating the digits themselves.
 - **Synctime's "two arcs" are drawn as short comet-trail arcs**
   (`Canvas.drawArc`) rather than full sweeping hands, so the direction and
   speed of rotation stay visible even when the two arcs happen to overlap.

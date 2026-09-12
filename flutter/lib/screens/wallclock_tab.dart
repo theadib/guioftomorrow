@@ -75,12 +75,38 @@ class _WallclockTabState extends State<WallclockTab> {
     super.dispose();
   }
 
+  static String _twoDigits(int n) => n.toString().padLeft(2, '0');
+
+  /// A small clock-face touch: the `:` separators blink on/off once a
+  /// second, like a classic digital clock, instead of the time just sitting
+  /// there static.
+  Widget _buildAnimatedTime(BuildContext context, tz.TZDateTime zoned) {
+    final style = Theme.of(context).textTheme.displayMedium;
+    final blinkOn = zoned.second.isEven;
+    final colon = AnimatedOpacity(
+      duration: const Duration(milliseconds: 300),
+      opacity: blinkOn ? 1 : 0.2,
+      child: Text(':', style: style),
+    );
+
+    return Row(
+      key: const Key('wallclock_time'),
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(_twoDigits(zoned.hour), style: style),
+        colon,
+        Text(_twoDigits(zoned.minute), style: style),
+        colon,
+        Text(_twoDigits(zoned.second), style: style),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final location = tz.getLocation(_timezoneName);
     final zoned = tz.TZDateTime.from(_now, location);
     final dateText = DateFormat('EEEE, d MMMM y').format(zoned);
-    final timeText = DateFormat('HH:mm:ss').format(zoned);
 
     return Center(
       child: Padding(
@@ -88,11 +114,7 @@ class _WallclockTabState extends State<WallclockTab> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              timeText,
-              key: const Key('wallclock_time'),
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
+            _buildAnimatedTime(context, zoned),
             const SizedBox(height: 8),
             Text(
               dateText,
