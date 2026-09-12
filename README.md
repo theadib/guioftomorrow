@@ -14,14 +14,18 @@ The demonstrator is a clock application with several tabs.
   the user can export its recordings as text to i.e. file
 - synctime displays two moving arcs for 1 second per rotation and 1 minuteper rotation, in the centre daytime hh:mm:ss as text  
   the arcs are updating permanently, so user can compare two computer times visually
+- settings. 
+  gui theme, system, light or dark, with contraste options normal or high contrast. 
+  scaling of fonts borders..., 50% ... 200%
 
-The this will represent some key features in gui apps like:
+
+The above will represent some key features in gui apps like:
 - user interaction
 - timed events
 - persistent settings
 - export to
 - graphical scene elements
-- standard gui elements
+- standard gui elements, styling
 
 ## Requirements
 for each project a README.md is required that:
