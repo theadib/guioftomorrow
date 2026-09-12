@@ -1,7 +1,7 @@
 # Flutter clock demonstrator
 
 The Flutter contester for the [GUI of Tomorrow](../README.md) comparison: a
-tabbed clock app (wallclock, stopwatch, synctime) built with
+tabbed clock app (wallclock, stopwatch, synctime, settings) built with
 [Flutter](https://flutter.dev)/Dart. See [../OVERVIEW.md](../OVERVIEW.md#flutter-dart)
 for the framework write-up and [IMPLEMENTATION.md](IMPLEMENTATION.md) for the
 completeness checklist.
@@ -79,18 +79,23 @@ there is no separate installer step for this demonstrator.
 - **Synctime** — a `CustomPainter` drawing two arcs (1 rotation/second and
   1 rotation/minute) around a live `hh:mm:ss` readout, redrawn ~30 times a
   second via a periodic `Timer`.
+- **Settings** — GUI theme (system/light/dark via `MaterialApp.themeMode`),
+  contrast (normal/high, via `ColorScheme.fromSeed`'s `contrastLevel`), and
+  a 50%–200% UI scale (`MediaQuery.textScaler`, applied app-wide in
+  `MaterialApp.builder`) — all persisted via `shared_preferences` and
+  applied live, immediately, without restarting the app.
 
 ## Screenshots
 
-| Wallclock | Stopwatch | Synctime |
-|---|---|---|
-| ![Wallclock tab](screenshots/wallclock.png) | ![Stopwatch tab](screenshots/stopwatch.png) | ![Synctime tab](screenshots/synctime.png) |
+| Wallclock | Stopwatch | Synctime | Settings |
+|---|---|---|---|
+| ![Wallclock tab](screenshots/wallclock.png) | ![Stopwatch tab](screenshots/stopwatch.png) | ![Synctime tab](screenshots/synctime.png) | ![Settings tab](screenshots/settings.png) |
 
 Captured from the Linux release build (`flutter build linux --release`).
 
 ## GUI testing
 
-`flutter_test` widget tests live in [test/](test); they cover all three tabs
+`flutter_test` widget tests live in [test/](test); they cover all four tabs
 plus the stopwatch's pure formatting/export-text helpers. Run them with
 `flutter test`.
 

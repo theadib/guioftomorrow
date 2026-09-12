@@ -14,7 +14,7 @@ void main() {
     SharedPreferences.setMockInitialValues({});
   });
 
-  testWidgets('shows all three tabs and switches between them', (
+  testWidgets('shows all four tabs and switches between them', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(const ClockApp());
@@ -23,6 +23,7 @@ void main() {
     expect(find.text('Wallclock'), findsOneWidget);
     expect(find.text('Stopwatch'), findsOneWidget);
     expect(find.text('Synctime'), findsOneWidget);
+    expect(find.text('Settings'), findsOneWidget);
 
     // Wallclock is the initial tab.
     expect(find.byKey(const Key('wallclock_time')), findsOneWidget);
@@ -34,6 +35,10 @@ void main() {
     await tester.tap(find.text('Synctime'));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('synctime_text')), findsOneWidget);
+
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('settings_theme_mode')), findsOneWidget);
 
     // Unmount so the periodic timers started by each tab are cancelled
     // before the test ends.
