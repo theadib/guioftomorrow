@@ -1,7 +1,8 @@
 # GUI of Tomorrow
 Since more than 20 years I am developing less complex GUI applications using wxWidgets later Qt.
 
-Time to change. I want to use a modern approach that works on Windows, Linux and possibly Android
+Time to change. I want to use a modern approach that works on Windows, Linux and possibly Android.
+Nowadays important to me possibility for gui tests.
 
 This repo hosts several projects demonstrating different GUI application frameworks.
 
@@ -30,8 +31,13 @@ for each project a README.md is required that:
 each project has an IMPLEMENTATION.md
 - completenes checklist
 - side notes
-each project fills a section in the OVERVIEW.md in the repo rotation
-- briefly stating pro and cons and when to use this framework and when not to choose that framework
+
+## Comparation
+each framwork is reported in a section in the OVERVIEW.md in the repo root
+- briefly stating pro and cons
+- when to use this framework and when not to choose that framework
+- ability for gui tests
+- abilty to use the framework using Python
 
 ## Contester
 I handselected the contesters
