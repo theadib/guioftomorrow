@@ -1,0 +1,15 @@
+# Repo-wide ignores that apply regardless of which contester's project
+# folder an editor/IDE is pointed at. Each contester project also has its
+# own language-specific .gitignore (e.g. flutter/.gitignore) for
+# build artifacts, caches, etc.
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/

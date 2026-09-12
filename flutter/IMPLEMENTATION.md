@@ -29,9 +29,9 @@ Per the [repo's demonstrator spec](../README.md#demonstrator):
       windows` has not actually been run.
 - [ ] Android build — not verified (no Android SDK in the dev container);
       same caveat as Windows.
-- [ ] Screenshots — not yet added to the repo. Verification so far was done
-      by capturing frames from a running Xvfb session (see below) rather
-      than committing polished screenshots; still TODO.
+- [x] Screenshots — see [README.md](README.md#screenshots) /
+      [screenshots/](screenshots), captured from the Linux release build
+      running under Xvfb at its default 1280×720 window size.
 
 ## Side notes
 

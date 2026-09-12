@@ -82,7 +82,11 @@ there is no separate installer step for this demonstrator.
 
 ## Screenshots
 
-TODO — screenshots of the three tabs still need to be added here.
+| Wallclock | Stopwatch | Synctime |
+|---|---|---|
+| ![Wallclock tab](screenshots/wallclock.png) | ![Stopwatch tab](screenshots/stopwatch.png) | ![Synctime tab](screenshots/synctime.png) |
+
+Captured from the Linux release build (`flutter build linux --release`).
 
 ## GUI testing
 
