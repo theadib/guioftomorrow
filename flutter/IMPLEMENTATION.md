@@ -18,11 +18,17 @@ Per the [repo's demonstrator spec](../README.md#demonstrator):
   - [x] Two arcs, one full rotation per second, one per minute
   - [x] Arcs update continuously (~30 fps)
   - [x] `hh:mm:ss` shown as text in the centre
-- [x] Tabbed navigation across all three demos
+- [x] **Settings** tab
+  - [x] GUI theme: system / light / dark
+  - [x] Contrast: normal / high contrast
+  - [x] UI scale: 50%–200%, applied to fonts app-wide
+  - [x] All three persist across app restarts
+- [x] Tabbed navigation across all four demos
 - [x] `flutter analyze` passes with no issues
 - [x] Automated GUI/unit tests (`flutter test`), see [README.md](README.md#gui-testing)
 - [x] Builds a release Linux desktop binary; manually exercised under Xvfb
-      (all three tabs, stopwatch start/lap/stop/export end-to-end)
+      (all four tabs, stopwatch start/lap/stop/export end-to-end, and
+      theme/contrast/scale settings verified visually via screenshots)
 - [ ] Windows build — not verified (no Windows toolchain in the dev
       container this was built in); the `windows/` platform folder was
       scaffolded and the code is platform-agnostic, but `flutter build
@@ -56,6 +62,23 @@ Per the [repo's demonstrator spec](../README.md#demonstrator):
   `zoned.second.isEven`, reusing the existing once-a-second timer/rebuild
   rather than adding a second ticker — kept intentionally small/subtle
   rather than animating the digits themselves.
+- **Settings are applied live, without an app restart.** `AppSettingsController`
+  (`lib/services/app_settings_controller.dart`) is a `ChangeNotifier` created
+  once in `ClockApp`'s state; `MaterialApp` listens to it and rebuilds with
+  the new `themeMode`/`ColorScheme.fromSeed(contrastLevel: ...)`/
+  `MediaQuery.textScaler` on every change, so toggling a setting updates the
+  whole app (including the currently-visible tab) immediately.
+- **UI scale only scales text (`MediaQuery.textScaler`), not layout metrics.**
+  A literal `Transform.scale` over the whole app was considered and rejected:
+  at 200% it would clip/overflow fixed-size layouts (e.g. the synctime
+  circle, button rows) instead of reflowing them. Scaling text only mirrors
+  how OS-level "text size" accessibility settings behave and is what
+  Material widgets are built to respond to; most widgets (buttons, app bar,
+  list tiles) grow with it since their intrinsic sizing follows text size.
+- **`ColorScheme.fromSeed`'s `contrastLevel`** (0.0 normal, 1.0 for "high
+  contrast" here) is Flutter's own dynamic-color contrast dial — verified
+  visually (screenshots) that toggling it visibly shifts the palette in both
+  light and dark theme.
 - **Synctime's "two arcs" are drawn as short comet-trail arcs**
   (`Canvas.drawArc`) rather than full sweeping hands, so the direction and
   speed of rotation stay visible even when the two arcs happen to overlap.
