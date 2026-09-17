@@ -40,6 +40,7 @@ each project has an IMPLEMENTATION.md
 each framwork is reported in a section in the OVERVIEW.md in the repo root
 - briefly stating pro and cons
 - when to use this framework and when not to choose that framework
+- how the framework support mvc or similar pattern
 - ability for gui tests
 - abilty to use the framework using Python
 
@@ -50,11 +51,16 @@ I handselected the contesters
 - Tauri Rust
 - Slint Rust
 - Dioxus Rust
+- 
 - Iced Rust
 - egui Rust
 - imgui C++
 
-
+not in the list
+- qt
+- slint, uses qt on windows
+- c#
+- 
 
 
 
