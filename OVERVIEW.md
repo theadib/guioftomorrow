@@ -23,7 +23,7 @@ demonstrator app itself has actually been built for each contester.
 | Contester      | Language | Demonstrator |
 |----------------|----------|--------------|
 | Flutter        | Dart     | [Done](flutter/) |
-| Tauri          | Rust     | Pending      |
+| Tauri          | Rust     | [Done](tauri/) |
 | Slint          | Rust     | [Done](slint/) |
 | Dioxus         | Rust     | [Done](dioxus/) |
 | Iced           | Rust     | [Done](iced/) |

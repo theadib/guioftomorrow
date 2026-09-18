@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GUI of Tomorrow — Tauri</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app-root" class="app-root">
+      <header class="app-header"><h1>GUI of Tomorrow — Tauri</h1></header>
+      <nav class="tab-bar">
+        <button class="tab-button active" data-tab="wallclock">Wallclock</button>
+        <button class="tab-button" data-tab="stopwatch">Stopwatch</button>
+        <button class="tab-button" data-tab="synctime">Synctime</button>
+        <button class="tab-button" data-tab="settings">Settings</button>
+      </nav>
+      <main class="tab-content">
+        <section class="tab wallclock-tab" data-panel="wallclock">
+          <div class="clock-display">
+            <span id="wc-hh">--</span><span class="clock-colon" id="wc-colon1">:</span
+            ><span id="wc-mm">--</span><span class="clock-colon" id="wc-colon2">:</span
+            ><span id="wc-ss">--</span>
+          </div>
+          <div class="date-display" id="wc-date">&nbsp;</div>
+          <div class="field-row">
+            <label for="wc-tz">Timezone</label>
+            <select id="wc-tz"></select>
+          </div>
+        </section>
+
+        <section class="tab stopwatch-tab" data-panel="stopwatch" hidden>
+          <div class="clock-display stopwatch-elapsed" id="sw-elapsed">00:00.00</div>
+          <div class="button-row">
+            <button id="sw-toggle">Start</button>
+            <button id="sw-lap" disabled>Lap</button>
+            <button id="sw-reset">Reset</button>
+            <button id="sw-export" disabled>Export</button>
+          </div>
+          <div class="export-message" id="sw-export-message"></div>
+          <ol class="lap-list" id="sw-laps"></ol>
+        </section>
+
+        <section class="tab synctime-tab" data-panel="synctime" hidden>
+          <div class="synctime-canvas">
+            <svg viewBox="0 0 240 240" width="240" height="240">
+              <circle class="synctime-ring" cx="120" cy="120" r="108" />
+              <circle class="synctime-ring" cx="120" cy="120" r="82" />
+              <path class="synctime-arc synctime-arc-second" id="st-second-arc" />
+              <path class="synctime-arc synctime-arc-minute" id="st-minute-arc" />
+            </svg>
+            <div class="synctime-readout" id="st-readout">--:--:--</div>
+          </div>
+          <p class="synctime-hint">
+            The outer arc completes one rotation per second, the inner arc one rotation per
+            minute — run this next to another instance (or another contester's demo) to compare
+            clocks visually.
+          </p>
+        </section>
+
+        <section class="tab settings-tab" data-panel="settings" hidden>
+          <fieldset>
+            <legend>GUI theme</legend>
+            <label class="radio-option"
+              ><input type="radio" name="theme-mode" value="system" /> System</label
+            >
+            <label class="radio-option"
+              ><input type="radio" name="theme-mode" value="light" /> Light</label
+            >
+            <label class="radio-option"
+              ><input type="radio" name="theme-mode" value="dark" /> Dark</label
+            >
+          </fieldset>
+          <fieldset>
+            <legend>Contrast</legend>
+            <label class="radio-option"
+              ><input type="radio" name="contrast" value="normal" /> Normal</label
+            >
+            <label class="radio-option"
+              ><input type="radio" name="contrast" value="high" /> High contrast</label
+            >
+          </fieldset>
+          <fieldset>
+            <legend id="ui-scale-legend">UI scale — 100%</legend>
+            <input type="range" id="ui-scale" min="50" max="200" step="10" value="100" />
+          </fieldset>
+        </section>
+      </main>
+    </div>
+    <script src="clock-logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

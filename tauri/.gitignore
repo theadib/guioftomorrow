@@ -1,0 +1,9 @@
+# Rust build artifacts
+/src-tauri/target/
+
+# Tauri's auto-generated schema/gen files (regenerated on build)
+/src-tauri/gen/
+
+# Local settings/exports written at runtime by the demonstrator itself
+# (kept in the OS config/data dirs, not here, but ignored just in case)
+*.pdb

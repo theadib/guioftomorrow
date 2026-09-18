@@ -1,0 +1,13 @@
+[package]
+name = "gui_of_tomorrow_tauri"
+version = "0.1.0"
+edition = "2021"
+description = "GUI of Tomorrow — Tauri (Rust) clock demonstrator"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.151"
+tauri = { version = "2", features = [] }
