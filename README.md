@@ -40,10 +40,13 @@ each project has an IMPLEMENTATION.md
 each framwork is reported in a section in the OVERVIEW.md in the repo root
 - briefly stating pro and cons
 - when to use this framework and when not to choose that framework
-- how the framework support mvc or similar pattern
+- complexity level of implementation
+- ability of the framework support mvc or similar pattern
 - ability for gui tests
 - ability for theming (dark, light, system)
+- ability to create dockable (sub)windows
 - abilty to use the framework using Python
+- Lines of code for the implementation (no comment, empty lines, ...)
 
 ## Contester
 I handselected the contesters
