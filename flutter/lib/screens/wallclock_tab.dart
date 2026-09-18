@@ -104,7 +104,11 @@ class _WallclockTabState extends State<WallclockTab> {
 
   @override
   Widget build(BuildContext context) {
-    final location = tz.getLocation(_timezoneName);
+    // The bundled tz database registers this zone as "Etc/UTC"; the "UTC"
+    // alias isn't present, so look it up via the dedicated constant instead.
+    final location = _timezoneName == 'UTC'
+        ? tz.UTC
+        : tz.getLocation(_timezoneName);
     final zoned = tz.TZDateTime.from(_now, location);
     final dateText = DateFormat('EEEE, d MMMM y').format(zoned);
 
