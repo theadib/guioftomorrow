@@ -1,0 +1,81 @@
+import { ComboBox } from "std-widgets.slint";
+import { AppTheme } from "theme.slint";
+
+export global WallclockModel {
+    in-out property <string> hh: "00";
+    in-out property <string> mm: "00";
+    in-out property <string> ss: "00";
+    in-out property <string> date-line: "";
+    in-out property <bool> blink: true;
+    // Seeded with a sane one-element default so the ComboBox's one-time
+    // init-time value resolution has something to match against before
+    // main.rs replaces it with the full curated list; otherwise it clears
+    // the selection and logs a debug warning. See
+    // https://github.com/slint-ui/slint/issues/11970.
+    in-out property <[string]> timezones: ["UTC"];
+    in-out property <string> selected-timezone: "UTC";
+    callback timezone-selected(string);
+}
+
+export component WallclockTab inherits VerticalLayout {
+    alignment: start;
+    spacing: 16px * AppTheme.scale;
+
+    HorizontalLayout {
+        alignment: center;
+        spacing: 2px * AppTheme.scale;
+
+        Text {
+            text: WallclockModel.hh;
+            font-size: 56px * AppTheme.scale;
+            color: AppTheme.foreground;
+        }
+        Text {
+            text: ":";
+            font-size: 56px * AppTheme.scale;
+            color: WallclockModel.blink ? AppTheme.foreground : AppTheme.muted;
+        }
+        Text {
+            text: WallclockModel.mm;
+            font-size: 56px * AppTheme.scale;
+            color: AppTheme.foreground;
+        }
+        Text {
+            text: ":";
+            font-size: 56px * AppTheme.scale;
+            color: WallclockModel.blink ? AppTheme.foreground : AppTheme.muted;
+        }
+        Text {
+            text: WallclockModel.ss;
+            font-size: 56px * AppTheme.scale;
+            color: AppTheme.foreground;
+        }
+    }
+
+    Text {
+        text: WallclockModel.date-line;
+        font-size: 18px * AppTheme.scale;
+        color: AppTheme.muted;
+        horizontal-alignment: center;
+    }
+
+    HorizontalLayout {
+        alignment: center;
+        spacing: 8px * AppTheme.scale;
+
+        Text {
+            text: "Timezone";
+            color: AppTheme.foreground;
+            font-size: 14px * AppTheme.scale;
+            vertical-alignment: center;
+        }
+
+        ComboBox {
+            model: WallclockModel.timezones;
+            current-value <=> WallclockModel.selected-timezone;
+            selected(value) => {
+                WallclockModel.timezone-selected(value);
+            }
+        }
+    }
+}

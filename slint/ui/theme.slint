@@ -1,0 +1,42 @@
+import { Palette } from "std-widgets.slint";
+
+// Re-exported so main.rs can force `Palette.color-scheme` to `light`/`dark`
+// when the user picks an explicit theme in the Settings tab, and leave it
+// at `unknown` (its default) for "System" so Slint keeps following the OS
+// setting on its own.
+export { Palette }
+
+// Centralizes this demo's own theming: the color palette (light/dark ×
+// normal/high-contrast) applied to every custom-drawn element, plus the
+// live UI-scale multiplier every font-size/spacing binding in this app's
+// own components uses. `Palette`'s std-widget chrome (ComboBox, Slider)
+// follows `Palette.color-scheme` automatically but keeps its own fixed
+// metrics — see IMPLEMENTATION.md for that documented scaling caveat.
+export global AppTheme {
+    in-out property <bool> high-contrast: false;
+    in-out property <float> scale: 1.0;
+
+    out property <bool> dark: Palette.color-scheme == ColorScheme.dark;
+
+    out property <color> background: root.high-contrast
+        ? (root.dark ? #000000 : #ffffff)
+        : (root.dark ? #1c1c1c : #fafafa);
+    out property <color> surface: root.high-contrast
+        ? (root.dark ? #000000 : #ffffff)
+        : (root.dark ? #2c2c2c : #ffffff);
+    out property <color> foreground: root.high-contrast
+        ? (root.dark ? #ffffff : #000000)
+        : (root.dark ? #ffffff : #202020);
+    out property <color> muted: root.high-contrast
+        ? (root.dark ? #ffffffcc : #000000cc)
+        : (root.dark ? #ffffff99 : #20202099);
+    out property <color> accent: root.high-contrast
+        ? (root.dark ? #66ccff : #0000cc)
+        : (root.dark ? #4fc3f7 : #1976d2);
+    out property <color> accent-secondary: root.high-contrast
+        ? (root.dark ? #ffcc00 : #cc6600)
+        : (root.dark ? #ff8a65 : #d84315);
+    out property <color> border: root.high-contrast
+        ? (root.dark ? #ffffff : #000000)
+        : (root.dark ? #ffffff33 : #00000022);
+}

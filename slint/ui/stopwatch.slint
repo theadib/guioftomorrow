@@ -1,0 +1,79 @@
+import { ScrollView } from "std-widgets.slint";
+import { AppTheme } from "theme.slint";
+import { PillButton } from "widgets.slint";
+
+export global Stopwatch {
+    in-out property <string> elapsed-text: "00:00.00";
+    in-out property <bool> running: false;
+    in-out property <bool> can-lap: false;
+    in-out property <bool> can-reset: true;
+    in-out property <bool> can-export: false;
+    in-out property <string> export-message: "";
+    in-out property <[string]> laps: [];
+    callback toggle();
+    callback lap();
+    callback reset();
+    callback export();
+}
+
+export component StopwatchTab inherits VerticalLayout {
+    alignment: start;
+    spacing: 16px * AppTheme.scale;
+
+    Text {
+        text: Stopwatch.elapsed-text;
+        font-size: 48px * AppTheme.scale;
+        color: AppTheme.foreground;
+        horizontal-alignment: center;
+    }
+
+    HorizontalLayout {
+        alignment: center;
+        spacing: 8px * AppTheme.scale;
+
+        PillButton {
+            text: Stopwatch.running ? "Stop" : "Start";
+            active: Stopwatch.running;
+            clicked => { Stopwatch.toggle(); }
+        }
+        PillButton {
+            text: "Lap";
+            enabled: Stopwatch.can-lap;
+            clicked => { Stopwatch.lap(); }
+        }
+        PillButton {
+            text: "Reset";
+            enabled: Stopwatch.can-reset;
+            clicked => { Stopwatch.reset(); }
+        }
+        PillButton {
+            text: "Export";
+            enabled: Stopwatch.can-export;
+            clicked => { Stopwatch.export(); }
+        }
+    }
+
+    if Stopwatch.export-message != "" : Text {
+        text: Stopwatch.export-message;
+        font-size: 13px * AppTheme.scale;
+        color: AppTheme.muted;
+        horizontal-alignment: center;
+        wrap: word-wrap;
+    }
+
+    ScrollView {
+        height: 160px * AppTheme.scale;
+
+        VerticalLayout {
+            alignment: start;
+            spacing: 4px * AppTheme.scale;
+
+            for lap in Stopwatch.laps : Text {
+                text: lap;
+                color: AppTheme.foreground;
+                font-size: 14px * AppTheme.scale;
+                horizontal-alignment: center;
+            }
+        }
+    }
+}

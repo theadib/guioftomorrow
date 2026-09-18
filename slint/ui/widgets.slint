@@ -1,0 +1,45 @@
+import { AppTheme } from "theme.slint";
+
+// A small, fully custom (non-std-widget) pill button used for the tab bar,
+// the theme/contrast selectors and the stopwatch controls, so its colors
+// follow `AppTheme` (light/dark × normal/high-contrast) and its size
+// follows `AppTheme.scale` exactly, unlike `std-widgets`' `Button`/
+// `ComboBox` chrome — see IMPLEMENTATION.md.
+export component PillButton inherits Rectangle {
+    in property <string> text;
+    in property <bool> active: false;
+    in property <bool> enabled: true;
+    callback clicked <=> touch.clicked;
+
+    height: 34px * AppTheme.scale;
+    border-radius: self.height / 2;
+    background: root.active ? AppTheme.accent : AppTheme.surface;
+    border-width: 1px * AppTheme.scale;
+    border-color: AppTheme.border;
+    opacity: root.enabled ? 1.0 : 0.4;
+
+    HorizontalLayout {
+        padding-left: 16px * AppTheme.scale;
+        padding-right: 16px * AppTheme.scale;
+        alignment: center;
+
+        Text {
+            text: root.text;
+            color: root.active ? AppTheme.background : AppTheme.foreground;
+            font-size: 14px * AppTheme.scale;
+            font-weight: root.active ? 700 : 400;
+            vertical-alignment: center;
+            horizontal-alignment: center;
+        }
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+    }
+}
+
+export component SectionLabel inherits Text {
+    font-size: 16px * AppTheme.scale;
+    font-weight: 600;
+    color: AppTheme.foreground;
+}

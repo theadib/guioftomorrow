@@ -1,0 +1,120 @@
+import { AppTheme } from "theme.slint";
+
+export global Synctime {
+    in-out property <string> time-text: "00:00:00";
+    in-out property <float> second-start-x: 0;
+    in-out property <float> second-start-y: -104;
+    in-out property <float> second-end-x: 0;
+    in-out property <float> second-end-y: -104;
+    in-out property <float> minute-start-x: 0;
+    in-out property <float> minute-start-y: -78;
+    in-out property <float> minute-end-x: 0;
+    in-out property <float> minute-end-y: -78;
+}
+
+export component SynctimeTab inherits VerticalLayout {
+    alignment: start;
+    spacing: 16px * AppTheme.scale;
+
+    HorizontalLayout {
+        alignment: center;
+
+        dial := Rectangle {
+            width: 240px * AppTheme.scale;
+            height: 240px * AppTheme.scale;
+
+            // Second ring (outer, static background).
+            Rectangle {
+                width: 208px * AppTheme.scale;
+                height: 208px * AppTheme.scale;
+                x: (parent.width - self.width) / 2;
+                y: (parent.height - self.height) / 2;
+                border-radius: self.width / 2;
+                border-width: 1px * AppTheme.scale;
+                border-color: AppTheme.border;
+            }
+
+            // Minute ring (inner, static background).
+            Rectangle {
+                width: 156px * AppTheme.scale;
+                height: 156px * AppTheme.scale;
+                x: (parent.width - self.width) / 2;
+                y: (parent.height - self.height) / 2;
+                border-radius: self.width / 2;
+                border-width: 1px * AppTheme.scale;
+                border-color: AppTheme.border;
+            }
+
+            // Once-per-second arc: a full rotation every second.
+            Path {
+                width: 100%;
+                height: 100%;
+                viewbox-x: -120;
+                viewbox-y: -120;
+                viewbox-width: 240;
+                viewbox-height: 240;
+                stroke: AppTheme.accent;
+                stroke-width: 6px * AppTheme.scale;
+                stroke-line-cap: round;
+
+                MoveTo {
+                    x: Synctime.second-start-x;
+                    y: Synctime.second-start-y;
+                }
+                ArcTo {
+                    x: Synctime.second-end-x;
+                    y: Synctime.second-end-y;
+                    radius-x: 104;
+                    radius-y: 104;
+                    sweep: true;
+                    large-arc: false;
+                }
+            }
+
+            // Once-per-minute arc: a full rotation every minute.
+            Path {
+                width: 100%;
+                height: 100%;
+                viewbox-x: -120;
+                viewbox-y: -120;
+                viewbox-width: 240;
+                viewbox-height: 240;
+                stroke: AppTheme.accent-secondary;
+                stroke-width: 6px * AppTheme.scale;
+                stroke-line-cap: round;
+
+                MoveTo {
+                    x: Synctime.minute-start-x;
+                    y: Synctime.minute-start-y;
+                }
+                ArcTo {
+                    x: Synctime.minute-end-x;
+                    y: Synctime.minute-end-y;
+                    radius-x: 78;
+                    radius-y: 78;
+                    sweep: true;
+                    large-arc: false;
+                }
+            }
+
+            Text {
+                text: Synctime.time-text;
+                width: 100%;
+                height: 100%;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+                font-size: 22px * AppTheme.scale;
+                color: AppTheme.foreground;
+            }
+        }
+    }
+
+    Text {
+        text: "The outer arc completes one rotation per second, the inner arc one rotation per minute — run this next to another instance (or another contester's demo) to compare clocks visually.";
+        font-size: 13px * AppTheme.scale;
+        color: AppTheme.muted;
+        horizontal-alignment: center;
+        wrap: word-wrap;
+        width: 360px * AppTheme.scale;
+    }
+}

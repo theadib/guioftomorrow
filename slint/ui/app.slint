@@ -1,0 +1,71 @@
+import { ScrollView } from "std-widgets.slint";
+import { AppTheme, Palette } from "theme.slint";
+import { PillButton } from "widgets.slint";
+import { WallclockTab, WallclockModel } from "wallclock.slint";
+import { StopwatchTab, Stopwatch } from "stopwatch.slint";
+import { SynctimeTab, Synctime } from "synctime.slint";
+import { SettingsTab, SettingsModel } from "settings_tab.slint";
+
+// Re-exported here (the entry document `slint-build` compiles) so main.rs
+// can reach every tab's global model via `app.global::<Name>()`.
+export { WallclockModel, Stopwatch, Synctime, SettingsModel, AppTheme, Palette }
+
+export component AppWindow inherits Window {
+    title: "GUI of Tomorrow — Slint";
+    preferred-width: 760px;
+    preferred-height: 620px;
+    background: AppTheme.background;
+    default-font-size: 14px * AppTheme.scale;
+
+    in-out property <int> active-tab: 0;
+
+    VerticalLayout {
+        padding: 20px * AppTheme.scale;
+        spacing: 20px * AppTheme.scale;
+
+        Text {
+            text: "GUI of Tomorrow — Slint";
+            font-size: 22px * AppTheme.scale;
+            font-weight: 700;
+            color: AppTheme.foreground;
+        }
+
+        HorizontalLayout {
+            spacing: 8px * AppTheme.scale;
+
+            PillButton {
+                text: "Wallclock";
+                active: root.active-tab == 0;
+                clicked => { root.active-tab = 0; }
+            }
+            PillButton {
+                text: "Stopwatch";
+                active: root.active-tab == 1;
+                clicked => { root.active-tab = 1; }
+            }
+            PillButton {
+                text: "Synctime";
+                active: root.active-tab == 2;
+                clicked => { root.active-tab = 2; }
+            }
+            PillButton {
+                text: "Settings";
+                active: root.active-tab == 3;
+                clicked => { root.active-tab = 3; }
+            }
+        }
+
+        ScrollView {
+            vertical-stretch: 1;
+
+            HorizontalLayout {
+                alignment: center;
+
+                if root.active-tab == 0 : WallclockTab {}
+                if root.active-tab == 1 : StopwatchTab {}
+                if root.active-tab == 2 : SynctimeTab {}
+                if root.active-tab == 3 : SettingsTab {}
+            }
+        }
+    }
+}

@@ -1,0 +1,68 @@
+import { Slider } from "std-widgets.slint";
+import { AppTheme } from "theme.slint";
+import { PillButton, SectionLabel } from "widgets.slint";
+
+export global SettingsModel {
+    in-out property <string> theme-mode: "system"; // "system" | "light" | "dark"
+    in-out property <bool> high-contrast: false;
+    in-out property <float> ui-scale: 100.0; // percent, 50..200
+    in-out property <string> ui-scale-label: "100%";
+    callback theme-mode-selected(string);
+    callback contrast-selected(bool);
+    callback scale-changed(float);
+}
+
+export component SettingsTab inherits VerticalLayout {
+    alignment: start;
+    spacing: 16px * AppTheme.scale;
+    width: 360px * AppTheme.scale;
+
+    SectionLabel {
+        text: "GUI theme";
+    }
+    HorizontalLayout {
+        spacing: 8px * AppTheme.scale;
+        PillButton {
+            text: "System";
+            active: SettingsModel.theme-mode == "system";
+            clicked => { SettingsModel.theme-mode-selected("system"); }
+        }
+        PillButton {
+            text: "Light";
+            active: SettingsModel.theme-mode == "light";
+            clicked => { SettingsModel.theme-mode-selected("light"); }
+        }
+        PillButton {
+            text: "Dark";
+            active: SettingsModel.theme-mode == "dark";
+            clicked => { SettingsModel.theme-mode-selected("dark"); }
+        }
+    }
+
+    SectionLabel {
+        text: "Contrast";
+    }
+    HorizontalLayout {
+        spacing: 8px * AppTheme.scale;
+        PillButton {
+            text: "Normal";
+            active: !SettingsModel.high-contrast;
+            clicked => { SettingsModel.contrast-selected(false); }
+        }
+        PillButton {
+            text: "High contrast";
+            active: SettingsModel.high-contrast;
+            clicked => { SettingsModel.contrast-selected(true); }
+        }
+    }
+
+    SectionLabel {
+        text: "UI scale — " + SettingsModel.ui-scale-label;
+    }
+    Slider {
+        minimum: 50;
+        maximum: 200;
+        value <=> SettingsModel.ui-scale;
+        changed(value) => { SettingsModel.scale-changed(value); }
+    }
+}
