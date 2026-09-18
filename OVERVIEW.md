@@ -27,7 +27,7 @@ demonstrator app itself has actually been built for each contester.
 | Slint          | Rust     | [Done](slint/) |
 | Dioxus         | Rust     | [Done](dioxus/) |
 | Iced           | Rust     | [Done](iced/) |
-| egui           | Rust     | Pending      |
+| egui           | Rust     | [Done](egui/) |
 | imgui          | C++      | [Done](imgui/) |
 
 ## Flutter (Dart)
