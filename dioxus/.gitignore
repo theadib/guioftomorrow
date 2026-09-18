@@ -1,0 +1,6 @@
+# Rust build artifacts
+/target/
+
+# Local settings/exports written at runtime by the demonstrator itself
+# (kept in the OS config/data dirs, not here, but ignored just in case)
+*.pdb

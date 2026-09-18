@@ -1,0 +1,20 @@
+[package]
+name = "dioxus_clock"
+version = "0.1.0"
+edition = "2021"
+description = "GUI of Tomorrow — Dioxus (Rust) clock demonstrator"
+
+[dependencies]
+chrono = "0.4.45"
+chrono-tz = "0.10.4"
+dark-light = "3.0.0"
+dioxus = { version = "0.7.10", default-features = false, features = ["desktop", "launch", "lib"] }
+dirs = "7.0.0"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.151"
+tokio = { version = "1.53.1", features = ["time", "rt", "macros"] }
+
+# dioxus-desktop unconditionally links tungstenite/native-tls for its
+# internal dev-asset websocket, which pulls in openssl-sys on Linux. Build
+# OpenSSL from source instead of requiring system `libssl-dev` headers.
+openssl-sys = { version = "0.9", features = ["vendored"] }
