@@ -26,7 +26,7 @@ demonstrator app itself has actually been built for each contester.
 | Tauri          | Rust     | Pending      |
 | Slint          | Rust     | Pending      |
 | Dioxus         | Rust     | [Done](dioxus/) |
-| Iced           | Rust     | Pending      |
+| Iced           | Rust     | [Done](iced/) |
 | egui           | Rust     | Pending      |
 | imgui          | C++      | [Done](imgui/) |
 
