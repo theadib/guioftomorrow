@@ -1,15 +1,18 @@
 # Overview
 
 This document collects, for each GUI framework demonstrated in this repo, a
-brief comparison: pros, cons, GUI testing support, Python usability, and
-guidance on when to choose it and when not to. Each project's own
-`README.md` covers environment setup, build/run/debug, and packaging; each
-project's own `IMPLEMENTATION.md` tracks its completeness checklist and side
-notes. This file is the cross-project summary, updated as each contester's
-demonstrator is implemented.
+brief comparison: pros, cons, support for MVC or similar architectural
+patterns, GUI testing support, theming support (dark, light, system), Python
+usability, and guidance on when to choose it and when not to. Each project's
+own `README.md` covers environment setup, build/run/debug, and packaging;
+each project's own `IMPLEMENTATION.md` tracks its completeness checklist and
+side notes. This file is the cross-project summary, updated as each
+contester's demonstrator is implemented.
 
 See [README.md](README.md) for the demonstrator app (a tabbed clock app with
-wallclock, stopwatch, and synctime tabs) and the list of contesters.
+wallclock, stopwatch, and synctime tabs) and the list of contesters. Qt,
+Slint's C# binding (which uses Qt on Windows) and plain C# were considered
+and deliberately left out of the contester list.
 
 ## Status
 
@@ -43,9 +46,14 @@ demonstrator app itself has actually been built for each contester.
 - **When not to use:** You need genuine native look-and-feel or minimal
   binary size, want to avoid a new language, or are targeting desktop only
   with a very small utility app.
+- **MVC/architecture:** No single pattern is enforced; the widget tree is
+  the view, and state-management packages (Provider, Riverpod, BLoC) layer
+  MVVM/MVI-style separation of state and business logic on top.
 - **GUI tests:** Strong first-class support — `flutter_test` for widget
   tests and the `integration_test` package for full end-to-end/driver-based
   UI tests, both officially maintained.
+- **Theming:** Built-in `ThemeData`/`ThemeMode` with first-class light,
+  dark and `system` (follows the OS setting automatically) modes.
 - **Python:** yes. using Flet package
 
 ## Tauri (Rust)
@@ -63,9 +71,16 @@ demonstrator app itself has actually been built for each contester.
 - **When not to use:** You need guaranteed, version-independent rendering,
   want to avoid web tech entirely, or must support environments with very
   outdated/missing system webviews.
+- **MVC/architecture:** Not prescribed by Tauri itself — whatever pattern
+  the chosen frontend framework supports (component-based, MVVM, Flux/Redux,
+  etc.) applies, with the Rust side acting as a backend/service layer.
 - **GUI tests:** Good — the front end is testable with standard web
   end-to-end tools, and Tauri ships `tauri-driver`, a WebDriver server for
   scripting the actual desktop window.
+- **Theming:** Not built in beyond what the frontend stack provides — a
+  standard `prefers-color-scheme` CSS media query plus Tauri's theme APIs
+  (reading and listening for OS theme changes) let you implement light,
+  dark and system-following themes yourself.
 - **Python:** No official bindings for building the Tauri app itself; a
   Python process can only be used as a separate sidecar/backend the Rust
   side talks to, not as the framework's UI layer.
@@ -87,9 +102,14 @@ demonstrator app itself has actually been built for each contester.
 - **When not to use:** You need a huge widget/plugin ecosystem, the widest
   possible community support, or want to avoid licensing considerations for
   closed-source commercial products.
+- **MVC/architecture:** Naturally MVVM-like — `.slint` markup is the view,
+  bound via properties/callbacks to a model/business-logic layer written in
+  Rust, C++ or Python, keeping UI and logic cleanly separated.
 - **GUI tests:** Still maturing — testing is mostly done by driving the
   Rust/C++/Python application logic directly; there isn't yet an official,
   mature widget/e2e testing framework comparable to Flutter's.
+- **Theming:** Built-in light/dark color scheme support (`Palette`/
+  `ColorScheme`) that can follow the OS setting or be switched manually.
 - **Python:** Yes — official Python bindings (`pip install slint`) let you
   build and run the same `.slint` UIs directly from Python.
 
@@ -108,9 +128,15 @@ demonstrator app itself has actually been built for each contester.
 - **When not to use:** You need a production-hardened, long-established
   framework today, need Python, or need fully native, non-webview desktop
   rendering out of the box.
+- **MVC/architecture:** React-like component/hooks model, so it's
+  component-based rather than classic MVC; hooks and shared state serve the
+  ViewModel role, similar to React/MVVM patterns.
 - **GUI tests:** Basic component/unit testing utilities exist; desktop
   end-to-end UI testing is not yet as mature as Flutter's, though the web
   target can reuse standard web e2e tooling.
+- **Theming:** No built-in theme system; light/dark/system theming is
+  implemented via CSS (including `prefers-color-scheme`) since desktop
+  rendering typically goes through a webview.
 - **Python:** None. Dioxus is Rust-only with no official Python bindings.
 
 ## Iced (Rust)
@@ -129,9 +155,16 @@ demonstrator app itself has actually been built for each contester.
   want) a functional, message-passing UI architecture.
 - **When not to use:** You need a large library of ready-made widgets, a
   native platform look, Python support, or a gentler learning curve.
+- **MVC/architecture:** Follows The Elm Architecture (Model-Update-View), a
+  distinct but related pattern to MVC — a single immutable model, pure
+  `update` functions for state transitions, and a `view` function that
+  renders from the model.
 - **GUI tests:** Limited — the pure `update` functions are easy to unit
   test, but there is no official widget-level or end-to-end UI testing
   framework yet; screenshot testing is possible only via community effort.
+- **Theming:** Built-in `Theme` enum with `Light`/`Dark`/custom themes;
+  following the OS setting automatically is not built in and needs a
+  community crate or manual detection.
 - **Python:** None. Iced is Rust-only.
 
 ## egui (Rust)
@@ -149,9 +182,15 @@ demonstrator app itself has actually been built for each contester.
   Rust-only stack matter more than a highly custom look.
 - **When not to use:** You need a richly branded, highly custom consumer
   UI, strong accessibility support, or Python.
+- **MVC/architecture:** Immediate-mode by design, so UI and logic are not
+  separated — the whole UI is rebuilt from application state every frame in
+  a single function, which is the opposite of a classic MVC split.
 - **GUI tests:** An official `egui_kittest` crate provides snapshot and
   interaction testing, but the story is still relatively new compared to
   established frameworks.
+- **Theming:** Built-in light/dark `Visuals` presets switchable at runtime;
+  `eframe` can pick up the OS light/dark setting on startup, but live
+  system-theme-change following is limited.
 - **Python:** No official bindings; only unofficial/experimental PyO3
   wrappers exist, not a first-class option.
 
@@ -173,8 +212,16 @@ demonstrator app itself has actually been built for each contester.
 - **When not to use:** Building a polished, accessible, native-looking
   consumer desktop app, or wanting easy packaging/distribution without
   hand-rolled build setup.
+- **MVC/architecture:** Immediate-mode like egui — no enforced separation
+  between view and logic; the app's render-loop function both holds and
+  displays state each frame, so any MVC-style layering is left to the
+  integrator.
 - **GUI tests:** No built-in automated testing framework; testing is
   largely manual/visual, though the community `imgui_test_engine` project
   (by Dear ImGui's author) adds scripted UI test capability.
+- **Theming:** No built-in dark/light/system switching; theming is done
+  manually by setting `ImGuiStyle` colors yourself (the built-in
+  `StyleColorsDark`/`StyleColorsLight` presets are a starting point, not an
+  OS-aware system).
 - **Python:** Yes — bindings such as `pyimgui`/`imgui-bundle` let you build
   Dear ImGui UIs directly from Python.
