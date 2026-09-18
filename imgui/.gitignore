@@ -1,0 +1,8 @@
+# CMake build directory (out-of-source build; includes FetchContent
+# checkouts of glfw/imgui/doctest, so it's large -- don't commit it)
+/build/
+/compile_commands.json
+
+# Dear ImGui's own runtime layout cache (window positions/sizes/tab state),
+# written next to the working directory the binary is run from.
+imgui.ini
