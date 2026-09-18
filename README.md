@@ -42,6 +42,7 @@ each framwork is reported in a section in the OVERVIEW.md in the repo root
 - when to use this framework and when not to choose that framework
 - how the framework support mvc or similar pattern
 - ability for gui tests
+- ability for theming (dark, light, system)
 - abilty to use the framework using Python
 
 ## Contester
@@ -51,7 +52,6 @@ I handselected the contesters
 - Tauri Rust
 - Slint Rust
 - Dioxus Rust
-- 
 - Iced Rust
 - egui Rust
 - imgui C++
