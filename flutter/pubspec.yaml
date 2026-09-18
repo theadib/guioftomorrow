@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # IANA timezone database, used by the wallclock tab.
-  timezone: ^0.10.1
+  timezone: ^0.11.1
   # Persists the user's selected timezone across restarts.
   shared_preferences: ^2.5.3
   # Resolves a writable directory for exporting stopwatch recordings.
