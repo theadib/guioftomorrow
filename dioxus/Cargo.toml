@@ -14,6 +14,7 @@ serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.151"
 tokio = { version = "1.53.1", features = ["time", "rt", "macros"] }
 
+[target.'cfg(target_os = "linux")'.dependencies]
 # dioxus-desktop unconditionally links tungstenite/native-tls for its
 # internal dev-asset websocket, which pulls in openssl-sys on Linux. Build
 # OpenSSL from source instead of requiring system `libssl-dev` headers.
