@@ -4,18 +4,13 @@
 #include <cstdio>
 #include <cstdlib>
 
+#include "platform_time.h"
+
 namespace clockapp::wallclock {
 
 std::tm time_in_zone(const std::string& tz, std::time_t utc_now) {
-    // setenv/tzset is the classic POSIX way to ask localtime_r() to convert
-    // into an arbitrary IANA zone rather than the process's own local zone.
-    // Not thread-safe (global TZ state) and POSIX-only (no MSVC support),
-    // both fine for this single-threaded demo -- see IMPLEMENTATION.md.
-    setenv("TZ", tz.c_str(), 1);
-    tzset();
-    std::tm result{};
-    localtime_r(&utc_now, &result);
-    return result;
+    platform::set_timezone(tz);
+    return platform::local_time(utc_now);
 }
 
 std::string format_clock(const std::tm& local_time, bool colon_visible) {

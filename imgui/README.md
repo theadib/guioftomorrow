@@ -87,10 +87,10 @@ exercised here; see [IMPLEMENTATION.md](IMPLEMENTATION.md).
 
 ## What it demonstrates
 
-- **Wallclock** — current date/time in a user-selectable IANA timezone
+- **Wallclock** — current date/time in a user-selectable timezone
   ([src/tabs/wallclock.cpp](src/tabs/wallclock.cpp),
   [src/tabs/wallclock_ui.cpp](src/tabs/wallclock_ui.cpp)), computed via the
-  C library's `TZ`/`tzset`/`localtime_r` and persisted across restarts; the
+  C library's platform-specific timezone APIs and persisted across restarts; the
   `:` separators blink once a second as a small clock-face animation.
 - **Stopwatch** — start/stop/reset/lap using `std::chrono::steady_clock`
   (monotonic, unaffected by system clock adjustments), with recorded laps

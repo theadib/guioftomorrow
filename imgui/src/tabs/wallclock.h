@@ -6,9 +6,9 @@
 namespace clockapp::wallclock {
 
 // Breaks down a UTC timestamp into local wall-clock fields for the given
-// IANA zone name (e.g. "Europe/Berlin"). Uses the C library's TZ database
-// via TZ/tzset/localtime_r, so it depends on process-global state (the TZ
-// environment variable) rather than being purely functional, but the
+// IANA zone name (e.g. "Europe/Berlin"). Uses the C library's TZ support,
+// so it depends on process-global state (the TZ environment variable)
+// rather than being purely functional, but the
 // timestamp -> broken-down-time mapping it computes is what's tested.
 std::tm time_in_zone(const std::string& tz, std::time_t utc_now);
 

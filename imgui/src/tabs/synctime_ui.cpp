@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <ctime>
 
+#include "platform_time.h"
 #include "synctime.h"
 
 namespace clockapp::ui {
@@ -20,8 +21,7 @@ void draw_synctime_tab() {
     const double seconds_since_epoch =
         std::chrono::duration<double>(now_tp.time_since_epoch()).count();
     const std::time_t now_t = std::chrono::system_clock::to_time_t(now_tp);
-    std::tm local{};
-    localtime_r(&now_t, &local);
+    const std::tm local = platform::local_time(now_t);
 
     const float scale = ImGui::GetIO().FontGlobalScale;
     const float outer_radius = 110.0f * scale;

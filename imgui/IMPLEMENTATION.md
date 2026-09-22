@@ -78,13 +78,13 @@ Per the [repo's demonstrator spec](../README.md#demonstrator):
   scripted click sequence would have given. It does not substitute for
   the pure-function unit tests as *regression* coverage, but it is real
   confirmation the wired-up UI works, not just that it compiles.
-- **Timezone switching uses global `TZ`/`tzset`, not a proper timezone
-  library.** `wallclock::time_in_zone()`
-  ([src/tabs/wallclock.cpp](src/tabs/wallclock.cpp)) calls `setenv("TZ",
-  ...)` + `tzset()` before every `localtime_r()`. This is POSIX-only (no
-  MSVC equivalent — Windows uses `_tzset()`/`_TIME_ZONE` differently and
-  doesn't understand IANA names the same way glibc does) and mutates
-  process-global state rather than being purely functional, but it needs
+- **Timezone switching uses global `TZ`, not a proper timezone library.**
+  `wallclock::time_in_zone()` ([src/tabs/wallclock.cpp](src/tabs/wallclock.cpp))
+  uses the platform wrappers in [src/platform_time.h](src/platform_time.h)
+  before converting with the C runtime. Windows builds use `_putenv_s`,
+  `_tzset`, and `localtime_s`, but the Windows CRT does not understand IANA
+  names the same way glibc does. This mutates process-global state rather than
+  being purely functional, but it needs
   no extra dependency (no ICU, no Howard Hinnant `date` library) and glibc
   ships the full IANA database already. Flagged as a real portability gap
   for the un-verified Windows build above, and unit-tested against a fixed

@@ -7,6 +7,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "platform_time.h"
+
 namespace clockapp::stopwatch {
 
 std::string format_elapsed(std::chrono::milliseconds elapsed) {
@@ -57,8 +59,7 @@ std::string export_file_path(std::time_t now) {
         const char* home = std::getenv("HOME");
         base = fs::path(home ? home : ".") / ".local" / "share";
     }
-    std::tm tm{};
-    localtime_r(&now, &tm);
+    const std::tm tm = platform::local_time(now);
     std::array<char, 32> stamp{};
     std::strftime(stamp.data(), stamp.size(), "%Y%m%d_%H%M%S", &tm);
     const std::string filename = std::string("stopwatch_export_") + stamp.data() + ".txt";

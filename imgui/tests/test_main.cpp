@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "platform_time.h"
 #include "settings.h"
 #include "tabs/stopwatch.h"
 #include "tabs/synctime.h"
@@ -110,8 +111,7 @@ TEST_CASE("build_export_text reports laps and total, or a placeholder when empty
 
 TEST_CASE("export_file_path builds a timestamped filename under imgui_clock/") {
     // 2024-01-02 03:24:05 UTC
-    setenv("TZ", "UTC", 1);
-    tzset();
+    platform::set_timezone("UTC");
     const std::string path = stopwatch::export_file_path(1'704'165'845);
     CHECK(path.find("imgui_clock") != std::string::npos);
     CHECK(path.find("20240102_032405") != std::string::npos);
