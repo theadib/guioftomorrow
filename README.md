@@ -46,7 +46,12 @@ each framwork is reported in a section in the OVERVIEW.md in the repo root
 - ability for theming (dark, light, system)
 - ability to create dockable (sub)windows
 - abilty to use the framework using Python
+- ability to handle a canvas object for drawing
 - Lines of code for the implementation (no comment, empty lines, ...)
+- List of LICENSE to be used
+- is it still maintained
+- how can I (re) style GUI elements or one special element
+- how can I implement some 3D scene
 
 ## Contester
 I handselected the contesters

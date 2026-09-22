@@ -4,8 +4,9 @@ This document collects, for each GUI framework demonstrated in this repo, a
 brief comparison: pros, cons, implementation complexity, support for MVC or
 similar architectural patterns, GUI testing support, theming support (dark,
 light, system), support for dockable (sub)windows, Python usability, lines
-of code for the implementation, and guidance on when to choose it and when
-not to. Each project's own `README.md` covers environment setup,
+of code for the implementation, canvas drawing, licensing, maintenance,
+restyling, 3D scene support, and guidance on when to choose it and when not
+to. Each project's own `README.md` covers environment setup,
 build/run/debug, and packaging; each project's own `IMPLEMENTATION.md`
 tracks its completeness checklist and side notes. This file is the
 cross-project summary, updated as each contester's demonstrator is
@@ -53,6 +54,20 @@ per-framework sections for the file/language breakdown.
 | egui       | Low         | No (immediate mode)      | Emerging (`egui_kittest`) | Built-in, limited system| Yes (`egui_dock` crate) | No (unofficial only) |   667 |
 | imgui      | Medium      | No (immediate mode)      | None built-in (community `imgui_test_engine`) | DIY (manual style colors) | Yes, built-in (docking branch) | Yes (`pyimgui`) |   657 |
 | Qt Widgets *(reference)* | Medium-high | Supported (Model/View classes) | Strong, official (`QTest`) | Built-in, incl. push-based system | Yes, built-in (`QDockWidget`) | Yes (`PyQt6`/`PySide6`) | 785 |
+
+The additional comparison points below describe the practical route for each
+framework rather than claiming that every capability is built in:
+
+| Project | Canvas drawing | License(s) to evaluate | Maintenance | Restyling | 3D scenes |
+|---------|----------------|-------------------------|-------------|-----------|-----------|
+| Flutter | `CustomPainter`, plus packages such as `flutter_gl` | BSD-3-Clause | Active, backed by Google | `ThemeData`, widget themes, or per-widget properties | Package/plugin or embedded native/web rendering; no core 3D scene graph |
+| Tauri | HTML `<canvas>`, WebGL, or a frontend canvas library | MIT/Apache-2.0 for Tauri; frontend licenses vary | Active, backed by the Tauri Foundation/community | CSS, frontend components, and platform APIs | WebGL/WebGPU libraries such as Three.js or Babylon.js |
+| Slint | `Path`/`Image` primitives and custom widgets | LGPLv3 or commercial license | Active, maintained by Slint | Palette, globals, and component properties | No built-in scene graph; integrate a native renderer or separate surface |
+| Dioxus | HTML `<canvas>`/WebGL through the webview renderer | MIT | Active, community-led | CSS and component properties | WebGL/WebGPU libraries such as Three.js |
+| Iced | `Canvas` widget and custom `Program` drawing | MIT | Active, community-led | Themes, styles, and custom widget styling | Integrate with `wgpu`; no built-in 3D scene graph |
+| egui | `Painter`, custom widgets, and plots | MIT/Apache-2.0 | Active, community-led | `Visuals`, style fields, and per-widget overrides | Integrate with the renderer/backend; no built-in 3D scene graph |
+| imgui | `ImDrawList` and renderer-specific primitives | MIT | Active, maintained by the Dear ImGui project | `ImGuiStyle` and per-item style stacks | Use the host engine/renderer; Dear ImGui is not a 3D engine |
+| Qt Widgets *(reference)* | `QPainter`, `QGraphicsView`, or custom widgets | LGPLv3/GPLv3 or commercial license | Active, maintained by Qt Group | Stylesheets, `QStyle`, palettes, and widget properties | Qt Quick 3D/Qt 3D integration, usually alongside Widgets |
 
 ## Flutter (Dart)
 
